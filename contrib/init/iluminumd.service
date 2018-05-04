@@ -1,0 +1,22 @@
+[Unit]
+Description=stargate's distributed currency daemon
+After=network.target
+
+[Service]
+User=stargatecore
+Group=stargatecore
+
+Type=forking
+PIDFile=/var/lib/stargated/stargated.pid
+ExecStart=/usr/bin/stargated -daemon -pid=/var/lib/stargated/stargated.pid \
+-conf=/etc/stargatecore/stargate.conf -datadir=/var/lib/stargated -disablewallet
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

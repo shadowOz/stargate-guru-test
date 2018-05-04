@@ -1,0 +1,6 @@
+usr/local/bin/stargate-qt usr/bin
+share/pixmaps/stargate32.xpm usr/share/pixmaps
+share/pixmaps/stargate16.xpm usr/share/pixmaps
+share/pixmaps/stargate128.png usr/share/pixmaps
+debian/stargate-qt.desktop usr/share/applications
+debian/stargate-qt.protocol usr/share/kde4/services/

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=stargate
+Comment=stargate P2P Cryptocurrency
+Comment[fr]=stargate, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=stargate, eşten eşe kriptografik sanal para birimi
+Exec=stargate-qt %u
+Terminal=false
+Type=Application
+Icon=stargate128
+MimeType=x-scheme-handler/stargate;
+Categories=Office;Finance;
