@@ -1,7 +1,7 @@
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2014 The Bitcoin Core developers
 // Copyright (c) 2014-2017 The Dash Core developers
-// Copyright (c) 2018 The Iluminum Core developers
+// Copyright (c) 2018 The Stargate Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -19,8 +19,8 @@
 #include "chainparamsseeds.h"
 
 
-#define GENESIS_TIME 1524249108
-#define GENESIS_DIFFICULTY 0x207fffff
+#define GENESIS_TIME 1525481273
+#define GENESIS_DIFFICULTY 0x1e0ffff0
 
 void MineGenesisBlock(CBlock &genesis);
 
@@ -61,8 +61,8 @@ static CBlock CreateGenesisBlock(const char* pszTimestamp, const CScript& genesi
  */
 static CBlock CreateGenesisBlock(uint32_t nTime, uint32_t nNonce, uint32_t nBits, int32_t nVersion, const CAmount& genesisReward)
 {
-    const char* pszTimestamp = "4/20/2018 Wells Fargo Pays $1 Billion to Federal Regulators.";
-    const CScript genesisOutputScript = CScript() << ParseHex("04678afdb0fe5548271967f1a67130b7105cd6a828e03909a67962e0ea1f61deb649f6bc3f4cef38c4f35504e51ec112de5c384df7ba0b8d578a4c702b6bf11d5f") << OP_CHECKSIG;
+    const char* pszTimestamp = "5/5/2018 The day star collide";
+    const CScript genesisOutputScript = CScript() << ParseHex("04de5f31323ec33c8e5818350a9309e7c4390a3e2d84a488ec27bda8316c8f76fb220009fda90be0c7bb07268b997b08b9fadf3689ef1b548b3760fd0654c32237") << OP_CHECKSIG;
     return CreateGenesisBlock(pszTimestamp, genesisOutputScript, nTime, nNonce, nBits, nVersion, genesisReward);
 }
 
@@ -102,8 +102,8 @@ public:
         consensus.BIP34Height = 1;
         consensus.BIP34Hash = uint256S("0x");
         consensus.powLimit = uint256S("00000fffff000000000000000000000000000000000000000000000000000000");
-        consensus.nPowTargetTimespan = 6.0 * 60 ; // Iluminum: 6.0 minutes
-        consensus.nPowTargetSpacing = 2.0 * 60; // Iluminum: 2.0 minutes
+        consensus.nPowTargetTimespan = 6.0 * 60 ; // Stargate: 6.0 minutes
+        consensus.nPowTargetSpacing = 2.0 * 60; // Stargate: 2.0 minutes
         consensus.fPowAllowMinDifficultyBlocks = false;
         consensus.fPowNoRetargeting = false;
         consensus.nPowKGWHeight = 3;
@@ -141,42 +141,39 @@ public:
          * The characters are rarely used upper ASCII, not valid as UTF-8, and produce
          * a large 32-bit integer with any alignment.
          */
-        pchMessageStart[0] = 0xb1;
-        pchMessageStart[1] = 0x57;
-        pchMessageStart[2] = 0x0b;
-        pchMessageStart[3] = 0xf4;
-        vAlertPubKey = ParseHex("042300d8083f237e0cb1b9082b6e07e2ed95c38f6aaa8c39b3ad92896ca55ff5328f0dbdddaffa03a67b2bbc60d87bd6bc2c47234cfa7edf203f802c7484e885e3");
-        nDefaultPort = 8555;
+        pchMessageStart[0] = 0xa1;
+        pchMessageStart[1] = 0x64;
+        pchMessageStart[2] = 0x5c;
+        pchMessageStart[3] = 0xd6;
+        vAlertPubKey = ParseHex("04de5f31323ec33c8e5818350a9309e7c4390a3e2d84a488ec27bda8316c8f76fb220009fda90be0c7bb07268b997b08b9fadf3689ef1b548b3760fd0654c32237");
+        nDefaultPort = 76467;
         nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
         nDelayGetHeadersTime = 24 * 60 * 60;
         nPruneAfterHeight = 100000;
 
-        genesis = CreateGenesisBlock(1524239507, 369731, 0x1e0ffff0, 1, 10 * COIN);
-        //MineGenesisBlock(genesis);
+        genesis = CreateGenesisBlock(GENESIS_TIME, 350182, GENESIS_DIFFICULTY, 1, 10 * COIN);
+        MineGenesisBlock(genesis);
         
         consensus.hashGenesisBlock = genesis.GetHash();
 	
 
-        assert(consensus.hashGenesisBlock == uint256S("0x"));
-        assert(genesis.hashMerkleRoot == uint256S("0xdc2cab5a1de54ba52f1b0c52386fefafa8bbdad1acac7ff4bd4779e314709716"));
+        //assert(consensus.hashGenesisBlock == uint256S("0x"));
+        //assert(genesis.hashMerkleRoot == uint256S("0xdc2cab5a1de54ba52f1b0c52386fefafa8bbdad1acac7ff4bd4779e314709716"));
 
 
-        vSeeds.push_back(CDNSSeedData("104.156.249.248",  "108.160.129.133"));
-        vSeeds.push_back(CDNSSeedData("140.82.37.236",  "207.246.88.229"));
-	vSeeds.push_back(CDNSSeedData("45.76.9.35",  "96.245.126.165"));
-
-        // Iluminum addresses start with 'X'
+        vSeeds.push_back(CDNSSeedData("",  ""));
+        // Stargate addresses start with 'X'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,75);
-        // Iluminum script addresses start with '7'
+        // Stargate script addresses start with '7'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,16);
-        // Iluminum private keys start with '7' or 'X'
+        // Stargate private keys start with '7' or 'X'
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,204);
-        // Iluminum BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
+        // Stargate BIP32 pubkeys start with 'xpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
-        // Iluminum BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
+        // Stargate BIP32 prvkeys start with 'xprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
 
-        // Iluminum BIP44 coin type is '5'
+        // Stargate BIP44 coin type is '5'
         nExtCoinType = 5;
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_main, pnSeed6_main + ARRAYLEN(pnSeed6_main));
@@ -231,8 +228,8 @@ public:
         consensus.BIP34Height = 1;
         consensus.BIP34Hash = uint256S("0x");
         consensus.powLimit = uint256S("00000fffff000000000000000000000000000000000000000000000000000000");
-        consensus.nPowTargetTimespan = 6.0 * 60; // Iluminum: 6.0 minutes
-        consensus.nPowTargetSpacing = 2.0 * 60; // Iluminum: 2.0 minutes
+        consensus.nPowTargetTimespan = 6.0 * 60; // Stargate: 6.0 minutes
+        consensus.nPowTargetSpacing = 2.0 * 60; // Stargate: 2.0 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = false;
         consensus.nPowKGWHeight = 1; // nPowKGWHeight >= nPowDGWHeight means "no KGW"
@@ -261,12 +258,12 @@ public:
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x"); // 4
 
-        pchMessageStart[0] = 0xb6;
-        pchMessageStart[1] = 0x9e;
-        pchMessageStart[2] = 0x87;
-        pchMessageStart[3] = 0x07;
-        vAlertPubKey = ParseHex("004096b14e8fd9e845b0d620b1fa6ef743df9f67ef151da5bc9fa30d4912225abd1df6703450f73d3fceea49882827aed5a3f6af3a697ae4bb5a93352d88113fd9e");
-        nDefaultPort = 17555;
+        pchMessageStart[0] = 0xc5;
+        pchMessageStart[1] = 0x7d;
+        pchMessageStart[2] = 0x76;
+        pchMessageStart[3] = 0x03;
+        vAlertPubKey = ParseHex("04de5f31323ec33c8e5818350a9309e7c4390a3e2d84a488ec27bda8316c8f76fb220009fda90be0c7bb07268b997b08b9fadf3689ef1b548b3760fd0654c32237");
+        nDefaultPort = 37555;
         nMaxTipAge = 0x7fffffff; // allow mining on top of old blocks for testnet
         nDelayGetHeadersTime = 24 * 60 * 60;
         nPruneAfterHeight = 1000;
@@ -279,8 +276,8 @@ public:
 
 
 
-        assert(consensus.hashGenesisBlock == uint256S("0x"));
-        assert(genesis.hashMerkleRoot == uint256S("0x"));
+        //assert(consensus.hashGenesisBlock == uint256S("0x"));
+        //assert(genesis.hashMerkleRoot == uint256S("0x"));
 
         vFixedSeeds.clear();
         vSeeds.clear();
@@ -288,18 +285,18 @@ public:
         vSeeds.push_back(CDNSSeedData("140.82.37.236",  "207.246.88.229"));
 	vSeeds.push_back(CDNSSeedData("45.76.9.35",  "96.245.126.165"));
 
-        // Testnet Iluminum addresses start with 'y'
+        // Testnet Stargate addresses start with 'y'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,140);
-        // Testnet Iluminum script addresses start with '8' or '9'
+        // Testnet Stargate script addresses start with '8' or '9'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,19);
         // Testnet private keys start with '9' or 'c' (Bitcoin defaults)
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,239);
-        // Testnet Iluminum BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
+        // Testnet Stargate BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x35)(0x87)(0xCF).convert_to_container<std::vector<unsigned char> >();
-        // Testnet Iluminum BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
+        // Testnet Stargate BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x35)(0x83)(0x94).convert_to_container<std::vector<unsigned char> >();
 
-        // Testnet Iluminum BIP44 coin type is '1' (All coin's testnet default)
+        // Testnet Stargate BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
 
         vFixedSeeds = std::vector<SeedSpec6>(pnSeed6_test, pnSeed6_test + ARRAYLEN(pnSeed6_test));
@@ -355,8 +352,8 @@ public:
         consensus.BIP34Height = -1; // BIP34 has not necessarily activated on regtest
         consensus.BIP34Hash = uint256();
         consensus.powLimit = uint256S("7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
-        consensus.nPowTargetTimespan = 24 * 60 * 60; // Iluminum: 1 day
-        consensus.nPowTargetSpacing = 2.5 * 60; // Iluminum: 2.5 minutes
+        consensus.nPowTargetTimespan = 24 * 60 * 60; // Stargate: 1 day
+        consensus.nPowTargetSpacing = 2.5 * 60; // Stargate: 2.5 minutes
         consensus.fPowAllowMinDifficultyBlocks = true;
         consensus.fPowNoRetargeting = true;
         consensus.nPowKGWHeight = 15200; // same as mainnet
@@ -379,13 +376,13 @@ public:
         // By default assume that the signatures in ancestors of this block are valid.
         consensus.defaultAssumeValid = uint256S("0x00");
 
-        pchMessageStart[0] = 0xb8;
-        pchMessageStart[1] = 0x9a;
-        pchMessageStart[2] = 0xa5;
-        pchMessageStart[3] = 0x8a;
+        pchMessageStart[0] = 0xc4;
+        pchMessageStart[1] = 0x3a;
+        pchMessageStart[2] = 0xa4;
+        pchMessageStart[3] = 0x2u;
         nMaxTipAge = 6 * 60 * 60; // ~144 blocks behind -> 2 x fork detection time, was 24 * 60 * 60 in bitcoin
         nDelayGetHeadersTime = 0; // never delay GETHEADERS in regtests
-        nDefaultPort = 16555;
+        nDefaultPort = 36555;
         nPruneAfterHeight = 1000;
 
         genesis = CreateGenesisBlock(1524249108, 0, 0x207fffff, 1, 10 * COIN);
@@ -395,8 +392,8 @@ public:
 
 
 
-        assert(consensus.hashGenesisBlock == uint256S("0x"));
-        assert(genesis.hashMerkleRoot == uint256S("0x"));
+        //assert(consensus.hashGenesisBlock == uint256S("0x"));
+        //assert(genesis.hashMerkleRoot == uint256S("0x"));
 
         vFixedSeeds.clear(); //! Regtest mode doesn't have any fixed seeds.
         vSeeds.clear();  //! Regtest mode doesn't have any DNS seeds.
@@ -416,18 +413,18 @@ public:
             0,
             0
         };
-        // Regtest Iluminum addresses start with 'y'
+        // Regtest Stargate addresses start with 'y'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1,75);
-        // Regtest Iluminum script addresses start with '8' or '9'
+        // Regtest Stargate script addresses start with '8' or '9'
         base58Prefixes[SCRIPT_ADDRESS] = std::vector<unsigned char>(1,16);
         // Regtest private keys start with '9' or 'c' (Bitcoin defaults)
         base58Prefixes[SECRET_KEY] =     std::vector<unsigned char>(1,204);
-        // Regtest Iluminum BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
+        // Regtest Stargate BIP32 pubkeys start with 'tpub' (Bitcoin defaults)
         base58Prefixes[EXT_PUBLIC_KEY] = boost::assign::list_of(0x04)(0x88)(0xB2)(0x1E).convert_to_container<std::vector<unsigned char> >();
-        // Regtest Iluminum BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
+        // Regtest Stargate BIP32 prvkeys start with 'tprv' (Bitcoin defaults)
         base58Prefixes[EXT_SECRET_KEY] = boost::assign::list_of(0x04)(0x88)(0xAD)(0xE4).convert_to_container<std::vector<unsigned char> >();
 
-        // Regtest Iluminum BIP44 coin type is '1' (All coin's testnet default)
+        // Regtest Stargate BIP44 coin type is '1' (All coin's testnet default)
         nExtCoinType = 1;
    }
 };
